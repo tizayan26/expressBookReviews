@@ -10,28 +10,25 @@ app.use(express.json());
 
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
 
+const jwt = require('jsonwebtoken');
+
 const secret = 'my-secret-key';
 
 app.use("/customer/auth/*", function auth(req,res,next){
-  const token = req.headers['authorization'] || req.query.token;
-console.log(token);
-  if (!token) {
-    return res.status(401).json({ message: 'Access token missing' });
-  }
+    const token = req.headers['authorization'] || req.query.token;
 
-  // Verify the access token.
-  jwt.verify(token, secret, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: 'Invalid access token' });
+    if (!token) {
+      return res.status(401).json({ message: 'Access token missing' });
     }
-
-    // If the token is valid, you can access the user's information in 'decoded'.
-    // For example, you can set it on the request object for further use.
-    req.user = decoded;
-
-    // Continue to the next middleware or route handler.
-    next();
-  });
+  
+    // Verify the access token.
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: 'Invalid access token' });
+      }
+  
+      req.user = decoded;
+      next();
 });
  
 const PORT =5000;

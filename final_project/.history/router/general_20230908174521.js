@@ -6,24 +6,12 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req,res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  console.log(username);
-  if (username && password) {
-    if (!isValid(username)) { 
-      users.push({"username":username,"password":password});
-      return res.status(200).json({message: "User successfully registred. Now you can login"});
-    } else {
-      return res.status(404).json({message: "User already exists!"});
-    }
-  } 
-  return res.status(404).json({message: "Unable to register user."});
   //Write your code here
-  //return res.status(300).json({message: "Yet to be implemented"});
+  return res.status(300).json({message: "Yet to be implemented"});
 });
 
 // Get the book list available in the shop
-public_users.get('/', async function (req, res) {
+public_users.get('/',function (req, res) {
   return res.status(200).json(books);
   //Write your code here
   // return res.status(300).json({message: "Yet to be implemented"});
@@ -48,7 +36,8 @@ public_users.get('/author/:author',function (req, res) {
   const author = req.params.author;
   const book = findBooksByAuthor(author);
   return res.status(200).json(book);
-  
+  //Write your code here
+  //return res.status(300).json({message: "Yet to be implemented"});
 });
 
 function findBooksByAuthor(authorName) {
@@ -83,11 +72,12 @@ public_users.get('/title/:title',function (req, res) {
   }
 
   if (matchingBooks.length > 0) {
-    return res.status(200).json(matchingBooks);
+    res.status(200).json(matchingBooks);
   } else {
-    return res.status(404).json({ message: 'No books found with the specified title.' });
+    res.status(404).json({ message: 'No books found with the specified title.' });
   }
-
+  // //Write your code here
+  // return res.status(300).json({message: "Yet to be implemented"});
 });
 
 //  Get book review
@@ -97,9 +87,9 @@ public_users.get('/review/:isbn',function (req, res) {
   const matchingBook = Object.values(books).find((book) => book.isbn === searchIsbn);
 
   if (matchingBook) {
-    return res.status(200).json(matchingBook.reviews);
+    res.status(200).json(matchingBook.reviews);
   } else {
-     return res.status(404).json({ message: 'No book found with the specified ISBN.' });
+    res.status(404).json({ message: 'No book found with the specified ISBN.' });
   }
   //  return res.status(300).json({message: "Yet to be implemented"});
   //Write your code here

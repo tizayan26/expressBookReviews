@@ -4,7 +4,6 @@ let books = require("./booksdb.js");
 const regd_users = express.Router();
 
 let users = [];
-const secret = 'my-secret-key';
 
 const isValid = (username)=>{ //returns boolean
   let userswithsamename = users.filter((user)=>{
@@ -39,11 +38,11 @@ regd_users.post("/login", (req,res) => {
   if (authenticatedUser(username,password)) {
     let accessToken = jwt.sign({
       data: password
-    }, secret, { expiresIn: 60 * 60 });
+    }, 'access', { expiresIn: 60 * 60 });
     req.session.authorization = {
       accessToken,username
   }
-  return res.status(200).json({message:"User successfully logged in",accessToken:accessToken});
+  return res.status(200).send("User successfully logged in");
   } else {
     return res.status(208).json({message: "Invalid Login. Check username and password"});
   }
@@ -53,22 +52,11 @@ regd_users.post("/login", (req,res) => {
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-  const searchIsbn = req.params.isbn;
-  const new_review = req.query.review;
-  // Search for a book with a matching ISBN
-  const matchingBook = Object.values(books).find((book) => book.isbn === searchIsbn);
-  matchingBook.reviews[3] = new_review;
   //Write your code here
-  return res.status(200).json(matchingBook);
+  return res.status(300).json({message: "Yet to be implemented"});
 });
 
 
-regd_users.delete("/auth/review/:isbn", (req, res) => {
-  const searchIsbn = req.params.isbn;
-  const matchingBook = Object.values(books).find((book) => book.isbn === searchIsbn);
-  matchingBook.reviews = {};
-  return res.status(200).send("Reviews for the ISBN "+(searchIsbn)+" posted by User admin deleted");
-});
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;

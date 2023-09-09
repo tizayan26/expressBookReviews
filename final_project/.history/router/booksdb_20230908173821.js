@@ -15,7 +15,7 @@ const books = {
         author: 'Dante Alighieri',
         title: 'The Divine Comedy',
         reviews: { 1: 'Epic journey through the afterlife' },
-        isbn: '9780195297708',
+        isbn: '9780679433139',
       },
       4: {
         author: 'Unknown',

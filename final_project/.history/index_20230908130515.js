@@ -10,11 +10,13 @@ app.use(express.json());
 
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
 
+const jwt = require('jsonwebtoken');
+
 const secret = 'my-secret-key';
 
 app.use("/customer/auth/*", function auth(req,res,next){
   const token = req.headers['authorization'] || req.query.token;
-console.log(token);
+
   if (!token) {
     return res.status(401).json({ message: 'Access token missing' });
   }

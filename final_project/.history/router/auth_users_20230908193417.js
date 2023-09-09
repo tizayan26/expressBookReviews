@@ -62,14 +62,6 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   return res.status(200).json(matchingBook);
 });
 
-
-regd_users.delete("/auth/review/:isbn", (req, res) => {
-  const searchIsbn = req.params.isbn;
-  const matchingBook = Object.values(books).find((book) => book.isbn === searchIsbn);
-  matchingBook.reviews = {};
-  return res.status(200).send("Reviews for the ISBN "+(searchIsbn)+" posted by User admin deleted");
-});
-
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
 module.exports.users = users;

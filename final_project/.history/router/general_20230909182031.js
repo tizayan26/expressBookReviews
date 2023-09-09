@@ -83,9 +83,9 @@ public_users.get('/title/:title',function (req, res) {
   }
 
   if (matchingBooks.length > 0) {
-    return res.status(200).json(matchingBooks);
+    res.status(200).json(matchingBooks);
   } else {
-    return res.status(404).json({ message: 'No books found with the specified title.' });
+    res.status(404).json({ message: 'No books found with the specified title.' });
   }
 
 });
@@ -97,9 +97,9 @@ public_users.get('/review/:isbn',function (req, res) {
   const matchingBook = Object.values(books).find((book) => book.isbn === searchIsbn);
 
   if (matchingBook) {
-    return res.status(200).json(matchingBook.reviews);
+    res.status(200).json(matchingBook.reviews);
   } else {
-     return res.status(404).json({ message: 'No book found with the specified ISBN.' });
+    res.status(404).json({ message: 'No book found with the specified ISBN.' });
   }
   //  return res.status(300).json({message: "Yet to be implemented"});
   //Write your code here
